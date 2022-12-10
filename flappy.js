@@ -143,6 +143,31 @@ function controlObstacleArray2(){
 }
 
 
+function checkCollisionAgainstObstacles1(){
+    let check = false;
+    for(let i = 0;i<topObstaclesArray.length;i++){
+        let obs = topObstaclesArray[i];
+        if(player.x + player.width >= obs.x && obs.x + obs.width >= player.x && player.y + player.height >= obs.y && obs.y + obs.height >= player.y){
+            check = true;
+            break;
+        }
+    }
+    return check;
+}
+
+
+function checkCollisionAgainstObstacles2(){
+    let check = false;
+    for(let i = 0;i<bottomObstaclesArray.length;i++){
+        let obs = bottomObstaclesArray[i];
+        if(player.x + player.width >= obs.x && obs.x + obs.width >= player.x && player.y + player.height >= obs.y && obs.y + obs.height >= player.y){
+            check = true;
+            break;
+        }
+    }
+    return check;
+}
+
 
 function gameLoop(){
     ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
@@ -153,6 +178,23 @@ function gameLoop(){
     drawTopObstacle();
     updateBottomObstacle();
     updateTopObstacle();
+    let t = checkCollisionAgainstObstacles1();
+    let b = checkCollisionAgainstObstacles2();
+    
+    if(t == true ){
+        ctx.font = "50px serif";
+        ctx.fillStyle = "white";
+        ctx.fillText("GAME OVER",canvas.width/2-120,canvas.height/2)
+        return;
+    }
+
+    if(b == true ){
+        ctx.font = "50px serif";
+        ctx.fillStyle = "white";
+        ctx.fillText("GAME OVER",canvas.width/2-120,canvas.height/2)
+        return;
+    }
+
     controlObstacleArray();
     controlObstacleArray2();
     requestAnimationFrame(gameLoop);
