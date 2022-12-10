@@ -10,6 +10,8 @@ let topObstaclesArray = [];
 
 let colors = ["red","blue","green","yellow"];
 
+let playerPos = 0;
+
 let heights = [(canvas.height/2)-70,(canvas.height/2)-90,(canvas.height/2)-120,(canvas.height/2)-150,(canvas.height/2)-200];
 
 function Obstacle(){
@@ -33,6 +35,48 @@ function Obstacle2(){
     this.y = 0;
 }
 
+function Player(){
+    this.color = "white";
+    this.width = 30;
+    this.height = 30;
+    this.y = (canvas.height/2) + (this.height/2);
+    this.x = (canvas.width/2) - 200;
+}
+
+let player = new Player();
+
+function getGamepad(){
+    let gamepad = navigator.getGamepads();
+    if(gamepad[0]){
+        let press = gamepad[0];
+
+        if(press.buttons[0].pressed == true){
+            playerPos = -16;
+        }
+
+        if(press.buttons[0].pressed == false){
+            playerPos = 4;
+        }
+
+    }
+}
+
+function drawPlayer(){
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x,player.y,player.width,player.height);
+}
+
+function updatePlayer(){
+    player.y += playerPos;
+
+    if(player.y < 0){
+        player.y = 0;
+    }
+
+    if(player.y + player.height > canvas.height){
+        player.y = canvas.height - player.height;
+    }
+}
 
 function fillBottomObstacle(){
     let obs = new Obstacle();
@@ -102,6 +146,9 @@ function controlObstacleArray2(){
 
 function gameLoop(){
     ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    getGamepad();
+    updatePlayer();
+    drawPlayer();
     drawBottomObstacle();
     drawTopObstacle();
     updateBottomObstacle();
