@@ -12,6 +12,8 @@ let colors = ["red","blue","green","yellow"];
 
 let playerPos = 0;
 
+let score = 0;
+
 let heights = [(canvas.height/2)-70,(canvas.height/2)-90,(canvas.height/2)-120,(canvas.height/2)-150,(canvas.height/2)-200];
 
 function Obstacle(){
@@ -97,6 +99,12 @@ function drawBottomObstacle(){
     }
 }
 
+function showScore(){
+    ctx.fillStyle = "white";
+    ctx.font = "40px serif";
+    ctx.fillText("score: " + String(score),10,40)
+}
+
 function drawTopObstacle(){
     for(let i = 0;i<topObstaclesArray.length;i++){
         let obs = topObstaclesArray[i];
@@ -128,6 +136,7 @@ function controlObstacleArray(){
     for(let i = 0;i<bottomObstaclesArray.length;i++){
         let obs =  bottomObstaclesArray[i];
         if(obs.x < -obs.width){
+            score++;
             bottomObstaclesArray.splice(i,1);
         }
     }
@@ -178,6 +187,7 @@ function gameLoop(){
     drawTopObstacle();
     updateBottomObstacle();
     updateTopObstacle();
+    showScore();
     let t = checkCollisionAgainstObstacles1();
     let b = checkCollisionAgainstObstacles2();
     
