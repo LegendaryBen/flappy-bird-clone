@@ -39,7 +39,7 @@ function Player(){
     this.color = "white";
     this.width = 30;
     this.height = 30;
-    this.y = (canvas.height/2) + (this.height/2);
+    this.y = (canvas.height/2) + (this.height + 50);
     this.x = (canvas.width/2) - 200;
 }
 
